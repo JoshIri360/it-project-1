@@ -1,0 +1,22 @@
+.App {
+  text-align: center;
+  padding-left: 13rem/* 176px */;
+  padding-right: 13rem/* 176px */;
+}
+
+
+@media screen and (max-width: 960px) {
+  html {
+    font-size: 12px;
+  }
+  .App {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .App div {
+    flex-wrap: wrap;
+  }
+}
