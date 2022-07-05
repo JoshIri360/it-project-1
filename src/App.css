@@ -1,9 +1,8 @@
 .App {
   text-align: center;
-  padding-left: 13rem/* 176px */;
-  padding-right: 13rem/* 176px */;
+  padding-left: 13rem /* 176px */;
+  padding-right: 13rem /* 176px */;
 }
-
 
 @media screen and (max-width: 960px) {
   html {
@@ -16,7 +15,14 @@
 }
 
 @media screen and (max-width: 600px) {
+  .App {
+    padding-top: 8rem;
+  }
   .App div {
     flex-wrap: wrap;
   }
+}
+
+.last-row {
+  width: 70%;
 }

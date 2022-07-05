@@ -1,39 +1,54 @@
 import React from "react";
 import "./App.css";
-import { TextField, InputLabel } from "@mui/material";
+import { TextField } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
 import tagsData from "./db/tags.json";
 import areaData from "./db/areas.json";
 import sysCatData from "./db/sysCat.json";
+import sysIdData from "./db/sysId.json";
+import availableSSIData from "./db/availableSSI.json";
 
 function App() {
+  let today = new Date();
   const [tag, setTag] = React.useState("");
   const [area, setArea] = React.useState("");
   const [sysCat, setSysCatData] = React.useState("");
-  const [date, setDate] = React.useState(new Date("2022-01-01"));
+  const [sysId, setSysIdData] = React.useState("");
+  const [availableSSI, setAvailableSSI] = React.useState("");
+  const [availableSSIalt, setAvailableSSIalt] = React.useState("");
+  const [date, setDate] = React.useState(
+    new Date(
+      `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+    )
+  );
 
   const handleTagChange = (event) => {
     setTag(event.target.value);
   };
-
   const handleSysCatChange = (event) => {
     setSysCatData(event.target.value);
   };
-
   const handleAreaChange = (event) => {
     setArea(event.target.value);
   };
-
+  const handleSysIdChange = (event) => {
+    setSysIdData(event.target.value);
+  };
+  const handleSSIChange = (event) => {
+    setAvailableSSI(event.target.value);
+  };
+  const handleSSIChangealt = (event) => {
+    setAvailableSSIalt(event.target.value);
+  };
   const handleDateChange = (newValue) => {
     setDate(newValue);
   };
+
   return (
     <div className="App flex flex-col gap-5 justify-center h-screen">
-      {console.log("render")}
       <div className="flex gap-5 justify-between">
         <TextField
           id="outlined-select-currency"
@@ -64,7 +79,6 @@ function App() {
           ))}
         </TextField>
         <TextField
-          id="outlined-select-currency"
           select
           fullWidth
           label="System Category"
@@ -79,13 +93,19 @@ function App() {
         </TextField>
         <TextField
           fullWidth
-          // select
-          id="outlined-basic"
+          select
           label="System Identifier Number"
-          variant="outlined"
-        />
+          value={sysId}
+          onChange={handleSysIdChange}
+        >
+          {sysIdData.map((options) => (
+            <MenuItem key={options.id} value={options.id}>
+              {options.value}
+            </MenuItem>
+          ))}
+        </TextField>
       </div>
-      <div className="flex gap-5 justify-center items-center">
+      <div className="flex gap-5 justify-center">
         <TextField
           fullWidth
           id="outlined-basic"
@@ -99,10 +119,10 @@ function App() {
           variant="outlined"
         />
         <TextField
-          id="outlined-basic"
-          label="SSI for approval"
+          disabled
+          label="Bukola Abiodun"
           fullWidth
-          variant="outlined"
+          helperText="Requestor"
         />
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DesktopDatePicker
@@ -129,22 +149,48 @@ function App() {
         id="outlined-multiline-flexible"
         label="Remark"
       />
-      <div className="flex gap-5 w-full items-center justify-between">
-        <div className="flex gap-5">
+      <div className="flex gap-5 w-full justify-between">
+        <div className="flex gap-5 justify-between last-row">
           <TextField
-            id="outlined-basic"
-            label="Tag Number"
-            variant="outlined"
-          />
+            fullWidth
+            label="Available SSIs For Approval"
+            select
+            value={availableSSI}
+            onChange={handleSSIChange}
+          >
+            {availableSSIData.map((options) => (
+              <MenuItem key={options.id} value={options.id}>
+                {options.value}
+              </MenuItem>
+            ))}
+          </TextField>
           <TextField
-            id="outlined-basic"
-            label="Tag Number"
-            variant="outlined"
-          />
+            fullWidth
+            label="Alternate Approval"
+            select
+            value={availableSSIalt}
+            onChange={handleSSIChangealt}
+          >
+            {availableSSIData.map((options) => (
+              <MenuItem key={options.id} value={options.id}>
+                {options.value}
+              </MenuItem>
+            ))}
+          </TextField>
         </div>
-        <a className="bg-green-600 p-4 rounded-md cursor-pointer hover:bg-green-700 transition-all">
+        <button
+          className="bg-green-600 p-4 rounded-md cursor-pointer hover:bg-green-700 transition-all"
+          onClick={() => {
+            console.log(
+              `Tag Number: ${tagsData[Number(tag) - 1].value}
+              \nArea: ${areaData[area - 1].value}
+              \nSystem Category: ${sysCatData[sysCat - 1].value}
+              \nSystem Identifier: ${sysIdData[sysId - 1].value}`
+            );
+          }}
+        >
           SUBMIT
-        </a>
+        </button>
       </div>
     </div>
   );
