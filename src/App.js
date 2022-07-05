@@ -6,53 +6,77 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import tagsData from "./db/tags.json";
+import areaData from "./db/areas.json";
+import sysCatData from "./db/sysCat.json";
 
 function App() {
   const [tag, setTag] = React.useState("");
+  const [area, setArea] = React.useState("");
+  const [sysCat, setSysCatData] = React.useState("");
+  const [date, setDate] = React.useState(new Date("2022-01-01"));
 
-  const handleChange = (event) => {
+  const handleTagChange = (event) => {
     setTag(event.target.value);
   };
-  const [date, setDate] = React.useState(new Date("2022-01-01"));
+
+  const handleSysCatChange = (event) => {
+    setSysCatData(event.target.value);
+  };
+
+  const handleAreaChange = (event) => {
+    setArea(event.target.value);
+  };
 
   const handleDateChange = (newValue) => {
     setDate(newValue);
   };
   return (
-    <div className="App flex flex-col gap-5 items-center justify-center h-screen">
-      <div className="flex gap-5 items-center justify-between">
+    <div className="App flex flex-col gap-5 justify-center h-screen">
+      {console.log("render")}
+      <div className="flex gap-5 justify-between">
         <TextField
-          // select
+          id="outlined-select-currency"
+          select
           fullWidth
-          id="outlined-basic"
           label="Tag Number"
-          variant="outlined"
+          value={tag}
+          onChange={handleTagChange}
         >
-          <MenuItem key="01">JKS2-232J-DUWR</MenuItem>
-          <MenuItem key="02">JKS2-232J-DUWR</MenuItem>
-          <MenuItem key="03">JKS2-232J-DUWR</MenuItem>
-          <MenuItem key="04">JKS2-232J-DUWR</MenuItem>
+          {tagsData.map((options) => (
+            <MenuItem key={options.id} value={options.id}>
+              {options.value}
+            </MenuItem>
+          ))}
         </TextField>
         <TextField
+          id="outlined-select-currency"
+          select
           fullWidth
-          // select
-          id="outlined-basic"
           label="Area"
-          variant="outlined"
+          value={area}
+          onChange={handleAreaChange}
         >
-          <MenuItem key="01">Area A</MenuItem>
-          <MenuItem key="02">Area B</MenuItem>
-          <MenuItem key="03">Area C</MenuItem>
-          <MenuItem key="04">Area D</MenuItem>
-          <MenuItem key="04">Area E</MenuItem>
+          {areaData.map((options) => (
+            <MenuItem key={options.id} value={options.id}>
+              {options.value}
+            </MenuItem>
+          ))}
         </TextField>
         <TextField
-          // select
+          id="outlined-select-currency"
+          select
           fullWidth
-          id="outlined-basic"
           label="System Category"
-          variant="outlined"
-        />
+          value={sysCat}
+          onChange={handleSysCatChange}
+        >
+          {sysCatData.map((options) => (
+            <MenuItem key={options.id} value={options.id}>
+              {options.value}
+            </MenuItem>
+          ))}
+        </TextField>
         <TextField
           fullWidth
           // select
